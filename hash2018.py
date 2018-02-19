@@ -1,5 +1,5 @@
 '''
-Created on 19 feb. 2018
+Created on the 19th of February, 2018
 
 @author: 'Per Kata Ad Astra' Team
 '''
