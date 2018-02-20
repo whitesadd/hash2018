@@ -5,7 +5,7 @@ Created on the 19th of February, 2018
 '''
 
 def main():
-    print("!!!Google Hash 2018!!!")
+    print("!!!!Google Hash 2018!!!!")
 
 if __name__ == '__main__':
     main()
