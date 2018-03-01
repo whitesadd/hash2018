@@ -15,7 +15,7 @@ def get_dist(pos1, pos2):
     return abs(rs - re) + abs(cs - ce)
 
 
-file_name = "e_high_bonus.in"
+file_name = "a_example.in"
 fh = open(file_name)
 
 
@@ -35,7 +35,7 @@ for x in fh:
 
 cars = setting[2]
 
-city = parser.City(file_name)
+city = draft_parser.City(file_name)
 rides = city.rides.values()
 
 dist = []
@@ -57,6 +57,23 @@ for item in range(len(dist)):
     dist[maxIndex] = 0
 
 #print(arraySortedRides)
-
-for i in range(int(cars)):
-    print('1',arraySortedRides[i])
+#print(len(rides))
+car = int(cars)
+for i in range(car):
+    #81 cars on 10000 rides
+    #400 cars on 10000 rides
+    #350 cars on 10000 rides
+    if car*10 < len(rides):
+        print('10',arraySortedRides[i],
+                  arraySortedRides[car+i],
+                  arraySortedRides[car*2+i],
+                  arraySortedRides[car*3+i],
+                  arraySortedRides[car*4+i],
+                  arraySortedRides[car*5+i],
+                  arraySortedRides[car*6+i],
+                  arraySortedRides[car*7+i],
+                  arraySortedRides[car*8+i],
+                  arraySortedRides[car*9+i],
+                  arraySortedRides[car*10+i])
+    else:
+        print('1', arraySortedRides[i])
