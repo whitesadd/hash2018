@@ -1,10 +1,11 @@
 class Ride:
-    def __init__(self, ride_string):
+    def __init__(self, ride_number, ride_string):
         inputs = ride_string.split(' ')
         self.start = [int(inputs[0]), int(inputs[1])]
         self.finish = [int(inputs[2]), int(inputs[3])]
         self.start_time = int(inputs[4])
         self.end_time = int(inputs[5])
+        self.ride_number = ride_number
 
     def __str__(self):
         ret = "{} -> {}: start={}, end={}".format(
@@ -15,14 +16,21 @@ class Ride:
         return ret
 
 class Car:
-    def __init__(self, order_string):
-        self.orders = order_string.split(' ')[1:]
+    def __init__(self):
         self.pos = [0, 0]
+        self.available_in = 0
 
+    def tick(self):
+        if self.available_in > 0:
+            self.available_in -= 1
+
+    def add_ride(self, ride):
+        print(ride)
 
 class City:
     def __init__(self, input_file):
         self.rides = {}
+        self.cars = []
         with open(input_file,"r") as f:
 
             ## Read one line
@@ -44,8 +52,11 @@ class City:
 
             cnt = 0
             for ride in ride_input[1:]:
-                self.rides[cnt] = Ride(ride.strip('\n'))
+                self.rides[cnt] = Ride(cnt, ride.strip('\n'))
                 cnt += 1
+
+            for x in range(self.numberOfVehicles):
+                self.cars.append(Car())
 
     def __str__(self):
         string = ""
