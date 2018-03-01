@@ -4,35 +4,7 @@ Created on the 19th of February, 2018
 @author: 'Per Kata Ad Astra' Team
 '''
 import sys
-
-numberOfRows = 0
-numberOfColumns = 0
-numberOfVehicles = 0
-numberOfRides = 0
-perRideBonus = 0
-numberOfSimSteps = 0
-
-def parse_input(inputFile):
-
-    f = open(inputFile,"r")
-
-    ## Read one line
-    #line = f.readline()
-    #print(line)
-
-    ## Read all lines in file
-    #for line in f:
-    #    print(line)
-
-    listWithAllLines = f.readlines()
-    firstRow = listWithAllLines[0].split()
-    numberOfRows = int(firstRow[0])
-    numberOfColumns = int(firstRow[1])
-    numberOfVehicles = int(firstRow[2])
-    numberOfRides = int(firstRow[3])
-    perRideBonus = int(firstRow[4])
-    numberOfSimSteps = int(firstRow[5])
-    f.close()
+import parser
 
 
 def dump_output():
@@ -58,7 +30,8 @@ def main():
       fileInput = sys.argv[1]
     else:
       fileInput = "a_example.in"
-      parse_input(fileInput)
+      city = parser.City(fileInput)
+      print(city)
 
 
 if __name__ == '__main__':
