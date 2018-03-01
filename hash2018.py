@@ -30,6 +30,10 @@ def dump_output():
 
 
 def get_dist(rs, cs, re, ce):
+    assert(isinstance(rs, int))
+    assert(isinstance(cs, int))
+    assert(isinstance(re, int))
+    assert(isinstance(ce, int))
     return abs(rs - re) + abs(cs - ce)
 
 def main():
