@@ -29,6 +29,9 @@ def dump_output():
     f.close()
 
 
+def get_dist(rs, cs, re, ce):
+    return abs(rs - re) + abs(cs - ce)
+
 def main():
     print("!!!!Google Hash 2018!!!!")
 
