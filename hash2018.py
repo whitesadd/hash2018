@@ -27,11 +27,24 @@ def get_dist(rs, cs, re, ce):
 def main():
     print("!!!!Google Hash 2018!!!!")
     if len(sys.argv) >= 2:
-      fileInput = sys.argv[1]
+        fileInput = sys.argv[1]
     else:
-      fileInput = "a_example.in"
-      city = parser.City(fileInput)
+        fileInput = "a_example.in"
 
+    city = parser.City(fileInput)
 
+    # Access the parameters
+    print(city.numberOfRows)
+    print(city.numberOfColumns)
+    print(city.numberOfVehicles)
+    print(city.numberOfRides)
+    print(city.perRideBonus)
+    print(city.numberOfSimSteps)
+
+    # Access the first route
+    print(city.rides[0])
+
+    ## Print the entire input
+    #print(city)
 if __name__ == '__main__':
     main()
