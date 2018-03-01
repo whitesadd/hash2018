@@ -1,3 +1,14 @@
+def get_dist(pos1, pos2):
+    rs = pos1[0]
+    cs = pos1[1]
+    re = pos2[0]
+    ce = pos2[1]
+    assert(isinstance(rs, int))
+    assert(isinstance(cs, int))
+    assert(isinstance(re, int))
+    assert(isinstance(ce, int))
+    return abs(rs - re) + abs(cs - ce)
+
 class Ride:
     def __init__(self, ride_number, ride_string):
         inputs = ride_string.split(' ')
@@ -6,6 +17,7 @@ class Ride:
         self.start_time = int(inputs[4])
         self.end_time = int(inputs[5])
         self.ride_number = ride_number
+        self.distance = get_dist(self.start, self.finish)
 
     def __str__(self):
         ret = "{} -> {}: start={}, end={}".format(
@@ -19,13 +31,29 @@ class Car:
     def __init__(self):
         self.pos = [0, 0]
         self.available_in = 0
+        self.rides = []
 
     def tick(self):
         if self.available_in > 0:
             self.available_in -= 1
 
-    def add_ride(self, ride):
-        print(ride)
+    def add_ride(self, ride, current_tick):
+        # Distance to the pickup point
+        n = get_dist(self.pos, ride.start)
+
+        # Wait time
+        w = 0
+        if current_tick + n < ride.start_time:
+            w = ride.start - current_tick + n
+
+        m = ride.distance + w + n
+
+        if current_tick + m <= ride.end_time:
+            self.available_in = m
+            self.rides.append(ride.ride_number)
+
+    def __str__(self):
+        '{} {}'.format(len(self.
 
 class City:
     def __init__(self, input_file):

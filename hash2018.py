@@ -16,24 +16,12 @@ def dump_output():
 
     f.close()
 
-
-def get_dist(pos1, pos2):
-    rs = pos1[0]
-    cs = pos1[1]
-    re = pos2[0]
-    ce = pos2[1]
-    assert(isinstance(rs, int))
-    assert(isinstance(cs, int))
-    assert(isinstance(re, int))
-    assert(isinstance(ce, int))
-    return abs(rs - re) + abs(cs - ce)
-
 def find_nearest_car(ride, cars):
     nearest_car = None
     nearest_dist = 9999999999999999
 
     for car in cars:
-        dist = get_dist(ride.start, car.pos)
+        dist = parser.get_dist(ride.start, car.pos)
         if dist < nearest_dist and car.available_in == 0:
             nearest_car = car
             nearest_dist = dist
@@ -46,7 +34,6 @@ def strategy(city):
     rides = sorted(rides, key=lambda ride: ride.start_time)
 
     for tick in range(city.numberOfSimSteps):
-
         for car in city.cars:
             car.tick()
 
@@ -56,8 +43,11 @@ def strategy(city):
             if car is None:
                 break
 
-            car.add_ride(ride)
+            car.add_ride(ride, tick)
             rides.pop(0)
+
+    print('Rides:')
+    for car in city.cars:
 
 def main():
     print("!!!!Google Hash 2018!!!!")
