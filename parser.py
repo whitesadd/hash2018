@@ -44,16 +44,19 @@ class Car:
         # Wait time
         w = 0
         if current_tick + n < ride.start_time:
-            w = ride.start - current_tick + n
+            w = ride.start_time - current_tick + n
 
         m = ride.distance + w + n
 
         if current_tick + m <= ride.end_time:
             self.available_in = m
             self.rides.append(ride.ride_number)
+            self.pos = ride.finish
 
     def __str__(self):
-        '{} {}'.format(len(self.
+        return '{} {}'.format(
+            len(self.rides),
+            ' '.join([str(i) for i in self.rides]))
 
 class City:
     def __init__(self, input_file):

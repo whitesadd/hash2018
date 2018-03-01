@@ -7,9 +7,9 @@ import sys
 import parser
 
 
-def dump_output():
+def dump_output(f_name):
 
-    f = open("file.out","w")
+    f = open(f_name,"w")
 
     ## Write stuff
     f.write("%s\n" % "Some stuff to write in out file")
@@ -29,7 +29,7 @@ def find_nearest_car(ride, cars):
     return nearest_car
 
 
-def strategy(city):
+def strategy(city, out_name):
     rides = city.rides.values()
     rides = sorted(rides, key=lambda ride: ride.start_time)
 
@@ -48,6 +48,12 @@ def strategy(city):
 
     print('Rides:')
     for car in city.cars:
+        print(car)
+
+    with open(out_name, 'w') as f:
+        for car in city.cars:
+            f.write("%s\n" % car.__str__())
+
 
 def main():
     print("!!!!Google Hash 2018!!!!")
@@ -72,6 +78,6 @@ def main():
     ## Print the entire input
     #print(city)
 
-    strategy(city)
+    strategy(city, "out.out")
 if __name__ == '__main__':
     main()
