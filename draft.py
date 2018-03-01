@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# 
+#
 
-fh = open("b_should_be_easy.in")
+fh = open("e_high_bonus.in")
 
 
 setting = list()
@@ -21,4 +21,4 @@ for x in fh:
 cars = setting[2]
 
 for i in range(int(cars)):
-    print(i+1,i+1)
+    print('1',i+1)
