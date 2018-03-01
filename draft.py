@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 
-import parser
+import draft_parser
 
 def get_dist(pos1, pos2):
     rs = pos1[0]
@@ -15,7 +15,7 @@ def get_dist(pos1, pos2):
     return abs(rs - re) + abs(cs - ce)
 
 
-file_name = "a_example.in"
+file_name = "e_high_bonus.in"
 fh = open(file_name)
 
 
@@ -37,13 +37,26 @@ cars = setting[2]
 
 city = parser.City(file_name)
 rides = city.rides.values()
-#print(rides)
+
 dist = []
 for i in rides:
-    #print(i)
-    #print(get_dist(i.start, i.finish))
     dist.append(get_dist(i.start, i.finish))
 
-print(dist)
-#for i in range(int(cars)):
-#    print('1',i+1)
+arraySortedRides = []
+
+for item in range(len(dist)):
+    maxDist = 0
+    maxIndex = 0
+    Index = 0
+    for d in dist:
+        if d > maxDist:
+            maxDist = d
+            maxIndex = Index
+        Index += 1
+    arraySortedRides.append(maxIndex)
+    dist[maxIndex] = 0
+
+#print(arraySortedRides)
+
+for i in range(int(cars)):
+    print('1',arraySortedRides[i])
