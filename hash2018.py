@@ -46,10 +46,6 @@ def strategy(city, out_name):
             car.add_ride(ride, tick)
             rides.pop(0)
 
-    print('Rides:')
-    for car in city.cars:
-        print(car)
-
     with open(out_name, 'w') as f:
         for car in city.cars:
             f.write("%s\n" % car.__str__())
@@ -59,6 +55,7 @@ def main():
     print("!!!!Google Hash 2018!!!!")
     if len(sys.argv) >= 2:
         fileInput = sys.argv[1]
+        out_name = sys.argv[2]
     else:
         fileInput = "a_example.in"
 
@@ -78,6 +75,6 @@ def main():
     ## Print the entire input
     #print(city)
 
-    strategy(city, "out.out")
+    strategy(city, out_name)
 if __name__ == '__main__':
     main()
