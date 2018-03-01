@@ -1,7 +1,22 @@
 #!/usr/bin/env python3
 #
 
-fh = open("e_high_bonus.in")
+import parser
+
+def get_dist(pos1, pos2):
+    rs = pos1[0]
+    cs = pos1[1]
+    re = pos2[0]
+    ce = pos2[1]
+    assert(isinstance(rs, int))
+    assert(isinstance(cs, int))
+    assert(isinstance(re, int))
+    assert(isinstance(ce, int))
+    return abs(rs - re) + abs(cs - ce)
+
+
+file_name = "a_example.in"
+fh = open(file_name)
 
 
 setting = list()
@@ -20,5 +35,15 @@ for x in fh:
 
 cars = setting[2]
 
-for i in range(int(cars)):
-    print('1',i+1)
+city = parser.City(file_name)
+rides = city.rides.values()
+#print(rides)
+dist = []
+for i in rides:
+    #print(i)
+    #print(get_dist(i.start, i.finish))
+    dist.append(get_dist(i.start, i.finish))
+
+print(dist)
+#for i in range(int(cars)):
+#    print('1',i+1)
