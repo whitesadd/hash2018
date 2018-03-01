@@ -31,7 +31,6 @@ def main():
     else:
       fileInput = "a_example.in"
       city = parser.City(fileInput)
-      print(city)
 
 
 if __name__ == '__main__':

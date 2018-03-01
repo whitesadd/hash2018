@@ -1,10 +1,11 @@
 class Ride:
     def __init__(self, ride_string):
         inputs = ride_string.split(' ')
-        self.start = [inputs[0], inputs[1]]
-        self.finish = [inputs[2], inputs[3]]
-        self.start_time = inputs[4]
-        self.end_time = inputs[5]
+        print("inputs", inputs)
+        self.start = [int(inputs[0]), int(inputs[1])]
+        self.finish = [int(inputs[2]), int(inputs[3])]
+        self.start_time = int(inputs[4])
+        self.end_time = int(inputs[5])
 
     def __str__(self):
         return "Hej hej"
@@ -30,7 +31,8 @@ class City:
             #    print(line)
 
             ride_input = f.readlines()
-            firstRow = ride_input[0].split(' ')
+            firstRow = ride_input[0].strip('\n').split(' ')
+            print("firstRow", firstRow)
             self.numberOfRows = int(firstRow[0])
             self.numberOfColumns = int(firstRow[1])
             self.numberOfVehicles = int(firstRow[2])
@@ -40,7 +42,8 @@ class City:
 
             cnt = 0
             for ride in ride_input[1:]:
-                self.rides[cnt] = Ride(ride)
+                print("ride", ride)
+                self.rides[cnt] = Ride(ride.strip('\n'))
                 cnt += 1
 
     def __str__(self):
@@ -51,4 +54,16 @@ class City:
         string += " " + str(self.numberOfRides)
         string += " " + str(self.perRideBonus)
         string += " " + str(self.numberOfSimSteps)
+
+        string += "\n"
+        for ride in self.rides.values():
+            print("riding!!", ride)
+            string += "start: " + str(ride.start)
+            string += "\n"
+            string += "finish: " + str(ride.finish)
+            string += "\n"
+            string += "start_time: " + str(ride.start_time)
+            string += "\n"
+            string += "end_time: " + str(ride.end_time)
+            string += "\n"
         return string
