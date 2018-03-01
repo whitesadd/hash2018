@@ -15,7 +15,7 @@ def get_dist(pos1, pos2):
     return abs(rs - re) + abs(cs - ce)
 
 
-file_name = "a_example.in"
+file_name = "e_high_bonus.in"
 fh = open(file_name)
 
 
@@ -64,7 +64,7 @@ for i in range(car):
     #400 cars on 10000 rides
     #350 cars on 10000 rides
     if car*10 < len(rides):
-        print('10',arraySortedRides[i],
+        print('21',arraySortedRides[i],
                   arraySortedRides[car+i],
                   arraySortedRides[car*2+i],
                   arraySortedRides[car*3+i],
@@ -74,6 +74,16 @@ for i in range(car):
                   arraySortedRides[car*7+i],
                   arraySortedRides[car*8+i],
                   arraySortedRides[car*9+i],
-                  arraySortedRides[car*10+i])
+                  arraySortedRides[car*10+i],
+                  arraySortedRides[car*11+i],
+                  arraySortedRides[car*12+i],
+                  arraySortedRides[car*13+i],
+                  arraySortedRides[car*14+i],
+                  arraySortedRides[car*15+i],
+                  arraySortedRides[car*16+i],
+                  arraySortedRides[car*17+i],
+                  arraySortedRides[car*18+i],
+                  arraySortedRides[car*19+i],
+                  arraySortedRides[car*20+i],)
     else:
         print('1', arraySortedRides[i])
