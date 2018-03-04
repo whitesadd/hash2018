@@ -9,12 +9,13 @@ import parser
 
 def dump_output(f_name):
 
-    f = open(f_name,"w")
+    f = open(f_name, "w")
 
-    ## Write stuff
+    # Write stuff
     f.write("%s\n" % "Some stuff to write in out file")
 
     f.close()
+
 
 def find_nearest_car(ride, cars):
     nearest_car = None
@@ -53,28 +54,27 @@ def strategy(city, out_name):
 
 def main():
     print("!!!!Google Hash 2018!!!!")
+    fileInputs = []
     if len(sys.argv) >= 2:
-        fileInput = sys.argv[1]
-        out_name = sys.argv[2]
+        fileInputs.append((sys.argv[1],
+                          sys.argv[2]))
     else:
-        fileInput = "a_example.in"
+        files = ["a_example.in",
+                 "b_should_be_easy.in",
+                 "c_no_hurry.in",
+                 "d_metropolis.in"]
+        for f in files:
+            out_file = 'out/' + f.split('.')[0] + '.out'
+            in_file = f
+            fileInputs.append((in_file, out_file))
 
-    city = parser.City(fileInput)
+    for in_out in fileInputs:
+        in_file = in_out[0]
+        out_file = in_out[1]
+        print("Optimizing for", in_file, "...")
+        city = parser.City(in_file)
+        strategy(city, out_file)
+        print("Done, results written to", out_file)
 
-    # Access the parameters
-    print(city.numberOfRows)
-    print(city.numberOfColumns)
-    print(city.numberOfVehicles)
-    print(city.numberOfRides)
-    print(city.perRideBonus)
-    print(city.numberOfSimSteps)
-
-    # Access the first route
-    # print(city.rides[0])
-
-    ## Print the entire input
-    #print(city)
-
-    strategy(city, out_name)
 if __name__ == '__main__':
     main()
