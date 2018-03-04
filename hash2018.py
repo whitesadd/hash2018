@@ -5,47 +5,38 @@ Created on the 19th of February, 2018
 '''
 import sys
 import parser
+from queue import Queue
 
 
-def dump_output(f_name):
+def find_best_ride(car, rides, current_tick):
+    best_ride = None
+    best_score = 0
 
-    f = open(f_name, "w")
+    for ride in rides.values():
+        score = car.evaluate_ride(ride, current_tick)
+        if score > best_score:
+            best_ride = ride
+            best_score = score
 
-    # Write stuff
-    f.write("%s\n" % "Some stuff to write in out file")
-
-    f.close()
-
-
-def find_nearest_car(ride, cars):
-    nearest_car = None
-    nearest_dist = 9999999999999999
-
-    for car in cars:
-        dist = parser.get_dist(ride.start, car.pos)
-        if dist < nearest_dist and car.available_in == 0:
-            nearest_car = car
-            nearest_dist = dist
-
-    return nearest_car
+    return best_ride
 
 
 def strategy(city, out_name):
-    rides = city.rides.values()
-    rides = sorted(rides, key=lambda ride: ride.start_time)
+    car_queue = Queue()
+    parser.Car.car_queue = car_queue
 
     for tick in range(city.numberOfSimSteps):
         for car in city.cars:
             car.tick()
 
-        while len(rides):
-            ride = rides[0]
-            car = find_nearest_car(ride, city.cars)
-            if car is None:
+        while(not car_queue.empty()):
+            car = car_queue.get()
+            ride = find_best_ride(car, city.rides, tick)
+            if ride is None:
                 break
 
             car.add_ride(ride, tick)
-            rides.pop(0)
+            del city.rides[ride.ride_number]
 
     with open(out_name, 'w') as f:
         for car in city.cars:
@@ -62,7 +53,8 @@ def main():
         files = ["a_example.in",
                  "b_should_be_easy.in",
                  "c_no_hurry.in",
-                 "d_metropolis.in"]
+                 "d_metropolis.in",
+                 "e_high_bonus.in"]
         for f in files:
             out_file = 'out/' + f.split('.')[0] + '.out'
             in_file = f

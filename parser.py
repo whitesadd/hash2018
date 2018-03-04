@@ -9,7 +9,10 @@ def get_dist(pos1, pos2):
     assert(isinstance(ce, int))
     return abs(rs - re) + abs(cs - ce)
 
+
 class Ride:
+    bonus = 0
+
     def __init__(self, ride_number, ride_string):
         inputs = ride_string.split(' ')
         self.start = [int(inputs[0]), int(inputs[1])]
@@ -27,7 +30,10 @@ class Ride:
             self.end_time)
         return ret
 
+
 class Car:
+    car_queue = None
+
     def __init__(self):
         self.pos = [0, 0]
         self.available_in = 0
@@ -36,6 +42,8 @@ class Car:
     def tick(self):
         if self.available_in > 0:
             self.available_in -= 1
+        else:
+            self.car_queue.put(self)
 
     def add_ride(self, ride, current_tick):
         # Distance to the pickup point
@@ -53,25 +61,36 @@ class Car:
             self.rides.append(ride.ride_number)
             self.pos = ride.finish
 
+    def evaluate_ride(self, ride, current_tick):
+        # Distance to the pickup point
+        n = get_dist(self.pos, ride.start)
+
+        # Wait time
+        w = 0
+        if current_tick + n < ride.start_time:
+            w = ride.start_time - current_tick + n
+
+        m = ride.distance + w + n
+
+        if not current_tick + m <= ride.end_time:
+            return 0
+
+        score = (ride.distance/m)*ride.distance + \
+            (not not w) * ride.bonus
+
+        return score
+
     def __str__(self):
         return '{} {}'.format(
             len(self.rides),
             ' '.join([str(i) for i in self.rides]))
 
+
 class City:
     def __init__(self, input_file):
         self.rides = {}
         self.cars = []
-        with open(input_file,"r") as f:
-
-            ## Read one line
-            #line = f.readline()
-            #print(line)
-
-            ## Read all lines in file
-            #for line in f:
-            #    print(line)
-
+        with open(input_file, "r") as f:
             ride_input = f.readlines()
             firstRow = ride_input[0].strip('\n').split(' ')
             self.numberOfRows = int(firstRow[0])
@@ -88,6 +107,8 @@ class City:
 
             for x in range(self.numberOfVehicles):
                 self.cars.append(Car())
+
+            Ride.bonus = self.perRideBonus
 
     def __str__(self):
         string = ""
