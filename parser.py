@@ -75,7 +75,7 @@ class Car:
         if not current_tick + m <= ride.end_time:
             return 0
 
-        score = (ride.distance/m) + \
+        score = m/(n+1) + \
             (not not w) * ride.bonus
 
         return score
