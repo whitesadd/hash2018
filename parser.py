@@ -97,7 +97,7 @@ class Car:
         if not current_tick + m <= ride.end_time:
             return sys.maxsize
 
-        return n + w + (not w) * ride.bonus
+        return n + w # + (not w) * ride.bonus
 
     def __str__(self):
         return '{} {}'.format(
