@@ -1,3 +1,6 @@
+import sys
+
+
 def get_dist(pos1, pos2):
     rs = pos1[0]
     cs = pos1[1]
@@ -42,8 +45,8 @@ class Car:
     def tick(self):
         if self.available_in > 0:
             self.available_in -= 1
-        else:
-            self.car_queue.put(self)
+            if self.available_in == 0:
+                self.car_queue.put(self)
 
     def add_ride(self, ride, current_tick):
         # Distance to the pickup point
@@ -75,10 +78,26 @@ class Car:
         if not current_tick + m <= ride.end_time:
             return 0
 
-        score = (ride.distance/m) + \
-            (not not w) * 0.5
+        score = (1/(n+w)) + \
+            (not not w) * ride.bonus
 
         return score
+
+    def evaluate_ride_dist(self, ride, current_tick):
+        # Distance to the pickup point
+        n = get_dist(self.pos, ride.start)
+
+        # Wait time
+        w = 0
+        if current_tick + n < ride.start_time:
+            w = ride.start_time - current_tick + n
+
+        m = ride.distance + w + n
+
+        if not current_tick + m <= ride.end_time:
+            return sys.maxsize
+
+        return n + w + (not w) * ride.bonus
 
     def __str__(self):
         return '{} {}'.format(

@@ -21,9 +21,25 @@ def find_best_ride(car, rides, current_tick):
     return best_ride
 
 
+def find_nearest_ride(car, rides, current_tick):
+    nearest_ride = None
+    nearest_dist = sys.maxsize
+
+    for ride in rides.values():
+        dist = car.evaluate_ride_dist(ride, current_tick)
+        if dist < nearest_dist:
+            nearest_ride = ride
+            nearest_dist = dist
+
+    return nearest_ride
+
+
 def strategy(city, out_name):
     car_queue = Queue()
     parser.Car.car_queue = car_queue
+
+    for car in city.cars:
+        car_queue.put(car)
 
     for tick in range(city.numberOfSimSteps):
         for car in city.cars:
@@ -31,9 +47,10 @@ def strategy(city, out_name):
 
         while(not car_queue.empty()):
             car = car_queue.get()
-            ride = find_best_ride(car, city.rides, tick)
+            # ride = find_best_ride(car, city.rides, tick)
+            ride = find_nearest_ride(car, city.rides, tick)
             if ride is None:
-                break
+                continue
 
             car.add_ride(ride, tick)
             del city.rides[ride.ride_number]
